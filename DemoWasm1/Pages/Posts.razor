@@ -1,0 +1,32 @@
+﻿@page "/posts"
+@using DemoWasm1.Models
+@using DemoWasm1.Services
+@inject PostService PostService
+
+<h3>Posts Modificados</h3>
+
+@if (posts == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <ul>
+        @foreach (var post in posts)
+        {
+            <li>
+                <h4>@post.Title</h4>
+                <p>@post.Body</p>
+            </li>
+        }
+    </ul>
+}
+
+@code {
+    private List<Post> posts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        posts = await PostService.GetPostsAsync();
+    }
+}
